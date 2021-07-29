@@ -1,16 +1,16 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 
-class Task extends StatelessWidget {
+class Task2 extends StatelessWidget {
   String res_;
 
-  Task({Key key, @required this.res_}) : super(key: key);
+  Task2({Key key, @required this.res_}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Task"),
+        title: Text("user: user2"),
       ),
       body: Container(
         height: double.infinity,
@@ -18,7 +18,7 @@ class Task extends StatelessWidget {
         color: Colors.white,
         alignment: Alignment.center,
         child: Text(
-          "{task1: 'limit: 2021/07/30, need: 3hours',\n'task2: limit: 2021/08/01, need: 4hours'}",
+          "{task1: 'limit: 2021/07/31, need: 9hours',\n'task2: limit: 2021/08/02, need: 2hours'}",
           style: TextStyle(fontSize: 24),
         ),
       ),

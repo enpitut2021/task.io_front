@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; //httpリクエスト用
 import 'dart:async'; //非同期処理用
 import 'dart:convert';
-import './task.dart';
+import './task1.dart';
+import './task2.dart';
 
 void main() {
   runApp(MyApp());
@@ -78,7 +79,7 @@ class _ChangeFormState extends State<ChangeForm> {
                 ),
                 RaisedButton(
                   onPressed: _submission,
-                  child: Text('保存'),
+                  child: Text('ログイン'),
                 )
               ],
             )));
@@ -100,11 +101,19 @@ class _ChangeFormState extends State<ChangeForm> {
         res = "Hello World";
       }
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              // （2） 実際に表示するページ(ウィジェット)を指定する
-              builder: (context) => Task(res_: res)));
+      if (this._email == "user1@example.com") {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                // （2） 実際に表示するページ(ウィジェット)を指定する
+                builder: (context) => Task1(res_: res)));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                // （2） 実際に表示するページ(ウィジェット)を指定する
+                builder: (context) => Task2(res_: res)));
+      }
     }
   }
 
