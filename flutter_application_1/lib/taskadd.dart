@@ -5,6 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import './calendar.dart';
+import './calendar2.dart';
 
 // リスト追加画面用Widget
 class TaskAdd extends StatefulWidget {
@@ -109,7 +110,7 @@ class _TaskAddState extends State<TaskAdd> {
                         context,
                         MaterialPageRoute(
                             // （2） 実際に表示するページ(ウィジェット)を指定する
-                            builder: (context) => Calendar()));
+                            builder: (context) => Calendar2()));
                   },
                   child: Text('登録', style: TextStyle(color: Colors.white)),
                 ),

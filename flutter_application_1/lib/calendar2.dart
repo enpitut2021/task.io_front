@@ -15,12 +15,12 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
-class Calendar extends StatefulWidget {
+class Calendar2 extends StatefulWidget {
   @override
-  _CalendarState createState() => _CalendarState();
+  _Calendar2State createState() => _Calendar2State();
 }
 
-class _CalendarState extends State<Calendar> {
+class _Calendar2State extends State<Calendar2> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -47,22 +47,34 @@ class _CalendarState extends State<Calendar> {
       DateTime.now(): [
         'task1: 目標:1時間30分, 残り:32%, 期限:7/31',
         'task2: 達成済み:20分, 残り:70%, 期限:8/4',
+        'task3: 目標:0分, 残り:100%, 期限:8/7',
       ],
       DateTime.now().add(Duration(days: 1)): [
         'task1: 目標:1時間30分, 残り:0%, 期限:7/31',
         'task2: 目標:20分, 残り:60%, 期限:8/4',
+        'task3: 目標:20分, 残り:80%, 期限:8/7',
       ],
       DateTime.now().add(Duration(days: 2)): [
         'task2: 目標:40分, 残り:40%, 期限:8/4',
+        'task3: 目標:1時間, 残り:80%, 期限:8/6',
       ],
       DateTime.now().add(Duration(days: 3)): [
         'task2: 目標:20分, 残り:30%, 期限:8/4',
+        'task3: 目標:30分, 残り:70%, 期限:8/6',
       ],
       DateTime.now().add(Duration(days: 4)): [
         'task2: 目標:20分, 残り:20%, 期限:8/4',
+        'task3: 目標:0分, 残り:70%, 期限:8/6',
       ],
       DateTime.now().add(Duration(days: 5)): [
         'task2: 目標:40分, 残り:0%, 期限:8/4',
+        'task3: 目標:0分, 残り:70%, 期限:8/6',
+      ],
+      DateTime.now().add(Duration(days: 6)): [
+        'task3: 目標:1時間30分, 残り:40%, 期限:8/6',
+      ],
+      DateTime.now().add(Duration(days: 7)): [
+        'task3: 目標:2時間, 残り:0%, 期限:8/6',
       ],
     };
   }
