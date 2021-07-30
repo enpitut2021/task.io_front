@@ -25,6 +25,13 @@ dependencies:
     sdk: flutter
   
   json_annotation: ^2.0.0
+  flutter_datetime_picker:
+    git:
+      url: https://github.com/Realank/flutter_datetime_picker.git
+      ref: master # これを追記して保存
+  intl: ^0.17.0 # これを追記して保存
+  table_calendar: ^3.0.1
+  simple_gesture_detector: ^ 0.2.0
 
 
   # The following adds the Cupertino Icons font to your application.

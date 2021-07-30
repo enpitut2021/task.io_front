@@ -7,6 +7,10 @@ import 'dart:convert';
 import './taskadd.dart';
 import './task2.dart';
 
+import 'package:intl/date_symbol_data_local.dart';
+
+import 'calendar.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -15,10 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Form',
+      title: 'Login',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Form'),
+          title: Text('Login'),
         ),
         body: Center(
           child: ChangeForm(),
@@ -47,8 +51,8 @@ class _ChangeFormState extends State<ChangeForm> {
             child: Column(
               children: <Widget>[
                 new TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   maxLength: 100,
-                  autovalidate: true,
                   decoration: const InputDecoration(
                     hintText: 'メールアドレス',
                     labelText: 'メールアドレス',
@@ -99,6 +103,7 @@ class _ChangeFormState extends State<ChangeForm> {
         // getData();
         // res = fetchApiResults();
         res = "Hello World";
+        initializeDateFormatting('ja_JP', null);
       }
 
       if (true) {
@@ -106,7 +111,8 @@ class _ChangeFormState extends State<ChangeForm> {
             context,
             MaterialPageRoute(
                 // （2） 実際に表示するページ(ウィジェット)を指定する
-                builder: (context) => TaskAdd(res_: res)));
+                // builder: (context) => TaskAdd(res_: res)));
+                builder: (context) => Calendar()));
       } else {
         Navigator.push(
             context,
