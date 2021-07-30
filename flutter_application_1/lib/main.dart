@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; //httpリクエスト用
 import 'dart:async'; //非同期処理用
 import 'dart:convert';
-import './task1.dart';
+import './taskadd.dart';
 import './task2.dart';
 
 void main() {
@@ -101,12 +101,12 @@ class _ChangeFormState extends State<ChangeForm> {
         res = "Hello World";
       }
 
-      if (this._email == "user1@example.com") {
+      if (true) {
         Navigator.push(
             context,
             MaterialPageRoute(
                 // （2） 実際に表示するページ(ウィジェット)を指定する
-                builder: (context) => Task1(res_: res)));
+                builder: (context) => TaskAdd(res_: res)));
       } else {
         Navigator.push(
             context,
@@ -144,7 +144,7 @@ class ApiResults {
 }
 
 Future<ApiResults> fetchApiResults() async {
-  var url = "http://172.16.0.223/creator/api/flutter_post_test";
+  var url = "https://reqres.in/api/users?page=2";
   var request = new SampleRequest(id: 1234, name: '大和賢一郎');
   final response = await http.post(url,
       body: json.encode(request.toJson()),
