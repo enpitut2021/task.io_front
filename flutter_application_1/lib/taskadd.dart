@@ -192,7 +192,7 @@ Future<ApiResults> fetchApiResults(title, detail, deadline, tasktime) async {
   final response = await http.post(url,
       body: json.encode(request.toJson()),
       headers: {"Content-Type": "application/json"});
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201) {
     print("Hello World!");
     return ApiResults.fromJson(json.decode(response.body));
   } else {
