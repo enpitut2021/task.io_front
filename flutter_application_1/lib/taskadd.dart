@@ -1,8 +1,12 @@
 // @dart=2.9
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+// import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:http/http.dart' as http;
 
 import './calendar.dart';
 import './calendar2.dart';
@@ -16,6 +20,8 @@ class TaskAdd extends StatefulWidget {
 }
 
 class _TaskAddState extends State<TaskAdd> {
+  final _formKey = GlobalKey<FormState>();
+
   DateFormat formatter;
   @override
   void initState() {
@@ -26,6 +32,9 @@ class _TaskAddState extends State<TaskAdd> {
     formatter = new DateFormat('MM/dd(E) HH:mm');
   }
 
+  String _title;
+  String _detail;
+  String _tasktime;
   var _mydatetime = new DateTime.now();
   // var formatter = new DateFormat('MM/dd(E) HH:mm');
 
@@ -50,6 +59,19 @@ class _TaskAddState extends State<TaskAdd> {
                   hintText: 'タスクを入力してください',
                   labelText: 'タスク名',
                 ),
+                onSaved: (String value) {
+                  this._title = value;
+                },
+              ),
+              TextFormField(
+                maxLength: 300,
+                decoration: const InputDecoration(
+                  hintText: '詳細を入力してください',
+                  labelText: '詳細',
+                ),
+                onSaved: (String value) {
+                  this._detail = value;
+                },
               ),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -62,6 +84,9 @@ class _TaskAddState extends State<TaskAdd> {
                   return double.parse(value, (e) => null) == null
                       ? '数字を入力してください'
                       : null;
+                },
+                onSaved: (String value) {
+                  this._tasktime = value;
                 },
               ),
               Text(''),
@@ -106,11 +131,16 @@ class _TaskAddState extends State<TaskAdd> {
                 // リスト追加ボタン
                 child: ElevatedButton(
                   onPressed: () {
+                    print("here");
+                    this._formKey.currentState.save();
+                    fetchApiResults(_title, _detail, _mydatetime, _tasktime);
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text('Processing Data')));
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             // （2） 実際に表示するページ(ウィジェット)を指定する
-                            builder: (context) => Calendar2()));
+                            builder: (context) => Calendar()));
                   },
                   child: Text('登録', style: TextStyle(color: Colors.white)),
                 ),
@@ -138,3 +168,69 @@ class _TaskAddState extends State<TaskAdd> {
 
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
+
+class ApiResults {
+  final String message;
+  ApiResults({
+    this.message,
+  });
+  factory ApiResults.fromJson(Map<String, dynamic> json) {
+    return ApiResults(
+      message: json['message'],
+    );
+  }
+}
+
+Future<ApiResults> fetchApiResults(title, detail, deadline, tasktime) async {
+  var url = "https://task-io-blitzkrieg.herokuapp.com/api/tasks/";
+  // var url = "https://httpbin.org/post";
+  var request = new SampleRequest(
+      title: title, detail: detail, deadline: deadline, tasktime: tasktime);
+  print("im here!");
+  print(request.toJson());
+  print(request.deadline);
+  final response = await http.post(url,
+      body: json.encode(request.toJson()),
+      headers: {"Content-Type": "application/json"});
+  if (response.statusCode == 200) {
+    print("Hello World!");
+    return ApiResults.fromJson(json.decode(response.body));
+  } else {
+    print(response.statusCode);
+    print("failed");
+    throw Exception('Failed');
+  }
+}
+
+class SampleRequest {
+  DateFormat formatter = new DateFormat('yyyy/MM/dd(E) HH:mm:ssZ');
+
+  String title;
+  String detail;
+  int tasktime;
+  DateTime deadline;
+  SampleRequest({
+    this.title,
+    this.detail,
+    this.tasktime,
+    this.deadline,
+  });
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'detail': detail,
+        'tasktime': "00:0" + tasktime.toString() + ":00",
+        'deadline': deadline.toIso8601String().substring(0, 19) + "+0000",
+      };
+}
+
+// String generateToken() {
+//   var jwt = JWT(
+//     {
+//       "exp": DateTime.now().add(Duration(seconds: 10)).millisecondsSinceEpoch,
+//       "custom_data": "some data",
+//     },
+//   );
+//   //secret key is our secret passphrase
+//   var token = jwt.sign(SecretKey(SECRIT_KEY));
+//   return token;
+// }

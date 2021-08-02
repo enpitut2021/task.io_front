@@ -6,10 +6,11 @@ import 'dart:async'; //非同期処理用
 import 'dart:convert';
 import './taskadd.dart';
 import './task2.dart';
-
+import './calendar2.dart';
+import './today.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'calendar.dart';
+import './calendar.dart';
 
 void main() {
   runApp(MyApp());
@@ -97,14 +98,14 @@ class _ChangeFormState extends State<ChangeForm> {
       // print(this._name);
       // print(this._email);
 
-      @override
-      void initState() {
-        super.initState();
-        // getData();
-        // res = fetchApiResults();
-        res = "Hello World";
-        initializeDateFormatting('ja_JP', null);
-      }
+      // @override
+      // void initState() {
+      //   super.initState();
+      //   // getData();
+      //   // res = fetchApiResults();
+      //   res = "Hello World";
+      //   initializeDateFormatting('ja_JP', null);
+      // }
 
       if (true) {
         Navigator.push(
