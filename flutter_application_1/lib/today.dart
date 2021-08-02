@@ -13,7 +13,7 @@ class Today extends StatefulWidget {
 }
 
 class _TodayState extends State<Today> {
-  List<dynamic> tasks;
+  List<dynamic> tasks = List<dynamic>();
   //YYYY-MM-DDTHH:MM:SS+GMT
   //'{"key1":"value", "key2":123, "key3":{"key4":"value2", "key5":456}}'
   @override
