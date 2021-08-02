@@ -1,5 +1,7 @@
 //@dart = 2.9
-import 'dart:ffi';
+// import 'dart:ffi';
+
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -47,5 +49,18 @@ class _TodayState extends State<Today> {
         ],
       ),
     );
+  }
+}
+
+Future getData() async {
+  var url = "https://httpbin.org/get";
+  //Future xxx async{} という記法response =
+  final response = await http.get(url);
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    print("succsess");
+    return response.body;
+  } else {
+    print("failed");
+    throw Exception('Failed');
   }
 }
