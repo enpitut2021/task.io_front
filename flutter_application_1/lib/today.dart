@@ -2,6 +2,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/taskadd.dart';
 import 'dart:convert';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -14,6 +15,7 @@ class _TodayState extends State<Today> {
   List<dynamic> tasks = List<dynamic>();
   //YYYY-MM-DDTHH:MM:SS+GMT
   //'{"key1":"value", "key2":123, "key3":{"key4":"value2", "key5":456}}'
+  String res = '';
   @override
   void initState() {
     super.initState();
@@ -94,16 +96,16 @@ class _TodayState extends State<Today> {
             ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.add),
-      //   onPressed: () {
-      //     Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //             // （2） 実際に表示するページ(ウィジェット)を指定する
-      //             builder: (context) => TaskAdd(res_: res)));
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  // （2） 実際に表示するページ(ウィジェット)を指定する
+                  builder: (context) => TaskAdd(res_: res)));
+        },
+      ),
     );
   }
 }
