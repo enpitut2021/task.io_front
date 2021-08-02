@@ -40,7 +40,9 @@ class _TaskAddState extends State<TaskAdd> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Form(
+      key: _formKey,
+      child: Scaffold(
       // *** 追加する部分 ***
       appBar: AppBar(
         title: Text('リスト追加'),
@@ -130,18 +132,7 @@ class _TaskAddState extends State<TaskAdd> {
                 width: double.infinity,
                 // リスト追加ボタン
                 child: ElevatedButton(
-                  onPressed: () {
-                    print("here");
-                    this._formKey.currentState.save();
-                    fetchApiResults(_title, _detail, _mydatetime, _tasktime);
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            // （2） 実際に表示するページ(ウィジェット)を指定する
-                            builder: (context) => Calendar()));
-                  },
+                  onPressed: _submission,
                   child: Text('登録', style: TextStyle(color: Colors.white)),
                 ),
               ),
@@ -163,10 +154,28 @@ class _TaskAddState extends State<TaskAdd> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+
+  void _submission() {
+    if (this._formKey.currentState.validate()) {
+      print("here");
+      this._formKey.currentState.save();
+      print("here2");
+      print(_title);
+      print(_detail);
+      print(_mydatetime);
+      print(_tasktime);
+      fetchApiResults(_title, _detail, _mydatetime, _tasktime);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              // （2） 実際に表示するページ(ウィジェット)を指定する
+              builder: (context) => Calendar()));
+    }
+  }
 }
 
 class ApiResults {
@@ -182,8 +191,10 @@ class ApiResults {
 }
 
 Future<ApiResults> fetchApiResults(title, detail, deadline, tasktime) async {
+  print("here3");
   var url = "https://task-io-blitzkrieg.herokuapp.com/api/tasks/";
   // var url = "https://httpbin.org/post";
+  print("here4");
   var request = new SampleRequest(
       title: title, detail: detail, deadline: deadline, tasktime: tasktime);
   print("im here!");
@@ -204,10 +215,9 @@ Future<ApiResults> fetchApiResults(title, detail, deadline, tasktime) async {
 
 class SampleRequest {
   DateFormat formatter = new DateFormat('yyyy/MM/dd(E) HH:mm:ssZ');
-
   String title;
   String detail;
-  int tasktime;
+  String tasktime;
   DateTime deadline;
   SampleRequest({
     this.title,
