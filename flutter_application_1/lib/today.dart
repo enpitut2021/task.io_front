@@ -40,14 +40,72 @@ class _TodayState extends State<Today> {
       ),
       body: ListView(
         children: <Widget>[
+          // for (var task in tasks)
+          //   Card(
+          //     child: ListTile(
+          //       title: Text(task['title']),
+          //     ),
+          //   ),
           for (var task in tasks)
-            Card(
-              child: ListTile(
-                title: Text(task['title']),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 10),
+                    Text(
+                      task["title"],
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xff333333),
+                      ),
+                    ),
+                    Text(
+                      task["limit"],
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        color: const Color(0xff333333),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 60,
+                ),
+                // ClipRRect(
+                //     borderRadius: const BorderRadius.only(
+                //       topLeft: Radius.circular(10),
+                //       bottomLeft: Radius.circular(10),
+                //     ),
+                //     child: Image.network(
+                //       'https://picsum.photos/200',
+                //       width: 100,
+                //       height: 100,
+                //     )),
+                Text(
+                  task["goal"],
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
+              ],
             ),
         ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Navigator.push(
+      //         context,
+      //         MaterialPageRoute(
+      //             // （2） 実際に表示するページ(ウィジェット)を指定する
+      //             builder: (context) => TaskAdd(res_: res)));
+      //   },
+      // ),
     );
   }
 }
