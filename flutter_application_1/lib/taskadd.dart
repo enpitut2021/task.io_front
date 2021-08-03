@@ -2,19 +2,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/home.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 // import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:http/http.dart' as http;
 
-import './calendar.dart';
-import './calendar2.dart';
+// import './calendar.dart';
 
 // リスト追加画面用Widget
 class TaskAdd extends StatefulWidget {
   String res_;
-  TaskAdd({Key key, @required this.res_}) : super(key: key);
+  TaskAdd({Key key, this.res_ = ''}) : super(key: key);
   @override
   _TaskAddState createState() => _TaskAddState();
 }
@@ -45,7 +45,8 @@ class _TaskAddState extends State<TaskAdd> {
         child: Scaffold(
           // *** 追加する部分 ***
           appBar: AppBar(
-            title: Text('リスト追加'),
+            automaticallyImplyLeading: false,
+            title: Text('Add Task'),
           ),
           // *** 追加する部分 ***
           body: Container(
@@ -173,7 +174,8 @@ class _TaskAddState extends State<TaskAdd> {
           context,
           MaterialPageRoute(
               // （2） 実際に表示するページ(ウィジェット)を指定する
-              builder: (context) => Calendar()));
+              // builder: (context) => Calendar()));
+              builder: (context) => HomePage()));
     }
   }
 }
@@ -203,7 +205,7 @@ Future<ApiResults> fetchApiResults(title, detail, deadline, tasktime) async {
   final response = await http.post(url,
       body: json.encode(request.toJson()),
       headers: {"Content-Type": "application/json"});
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
     print("Hello World!");
     return ApiResults.fromJson(json.decode(response.body));
   } else {

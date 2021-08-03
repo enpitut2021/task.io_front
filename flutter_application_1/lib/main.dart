@@ -1,16 +1,15 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/home.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http; //httpリクエスト用
 import 'dart:async'; //非同期処理用
 import 'dart:convert';
 import './taskadd.dart';
-import './task2.dart';
-import './calendar2.dart';
-import './today.dart';
+// import './today.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import './calendar.dart';
+// import './calendar.dart';
 
 void main() {
   runApp(MyApp());
@@ -69,7 +68,7 @@ class _ChangeFormState extends State<ChangeForm> {
                   enabled: true,
                   maxLength: 20,
                   maxLengthEnforced: false,
-                  obscureText: false,
+                  obscureText: true,
                   autovalidate: false,
                   decoration: const InputDecoration(
                     hintText: 'パスワード',
@@ -113,13 +112,7 @@ class _ChangeFormState extends State<ChangeForm> {
             MaterialPageRoute(
                 // （2） 実際に表示するページ(ウィジェット)を指定する
                 // builder: (context) => TaskAdd(res_: res)));
-                builder: (context) => Today()));
-      } else {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                // （2） 実際に表示するページ(ウィジェット)を指定する
-                builder: (context) => Task2(res_: res)));
+                builder: (context) => HomePage()));
       }
     }
   }
