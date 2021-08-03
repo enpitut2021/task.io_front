@@ -1,7 +1,7 @@
 //@dart = 2.9
 import 'package:flutter/material.dart';
 // import 'package:flutter_application_1/today.dart';
-// import './today.dart';
+import './today.dart';
 import './calendar.dart';
 import './taskadd.dart';
 import './today2.dart';
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   // 表示する Widget の一覧
   static List<Widget> _pageList = [
-    Today2(),
+    Today(),
     // SamplePage(title: 'today'),
     TaskAdd(res_: ''),
     Calendar(),

@@ -18,45 +18,66 @@ String date_format(@required String date) {
 }
 
 Future<dynamic> fetchStores() async {
+  print("fetchStores");
   var formatter = new DateFormat('yyyy-MM-dd');
   final now = DateTime.now();
   var date = formatter.format(now);
   final url = 'https://task-io-blitzkrieg.herokuapp.com/api/tasks/?day=' + date;
   final response = await http.get(url);
   if (response.statusCode == 200) {
-    print(response.statusCode);
+    // print(response.statusCode);
     print("success");
     String responseUTF = utf8.decode(response.bodyBytes);
     print(responseUTF);
     var decodedJson = json.decode(responseUTF);
-    print(decodedJson);
+    // print(decodedJson);
     return decodedJson;
   } else {
     print("failed");
   }
 }
 
-Future<dynamic> today_calc(response) async {
-  List<Map> ret = await List<Map>();
+List<Map> Today_calc(response) {
+  print("0");
+  List<Map> ret = [];
   var task;
+  print("1");
   for (task in response) {
-    Map each;
+    print("2");
+    Map<String, dynamic> each = {};
+    print("3");
     DateTime deadline = DateTime.parse(task["deadline"]);
-    DateTime created_at = DateTime.parse(task["created_at"]);
+    print("4");
+    DateTime createdAt = DateTime.parse(task["created_at"]);
+    print("5");
     DateTime now = DateTime.now();
-    var all_days = created_at.difference(deadline).inDays;
-    print(all_days);
-    var left_days = now.difference(deadline).inDays;
-    var goal = int.parse(task["tasktime"].substring(3, 5)) / all_days;
-    var left = left_days / all_days * 100 % 1;
+    var allDays = deadline.difference(createdAt).inDays;
+    print(allDays);
+    var leftDays = deadline.difference(now).inDays;
+    var goal = int.parse(task["tasktime"].substring(3, 5)) / (allDays + 1);
+    var left = (leftDays + 1) / (allDays + 1) * 100 % 1;
+    // var goal = "20";
+    // var left = "30";
     print(goal);
+    // print(allDays.runtimeType);
+    // print(leftDays.runtimeType);
+    print(goal.runtimeType);
+    print("left.rentimeType");
+    print(left.runtimeType);
+    String strgoal = goal.round().toString();
+    String strleft = left.round().toString();
+    // print(allDays.runtimeType);
+    // print(leftDays.runtimeType);
+    print(goal.runtimeType);
+    print(left.runtimeType);
     each.addAll({
-      "goal": goal,
+      "goal": strgoal,
       "title": task["title"],
       "limit": task["deadline"],
-      "left": left,
+      "left": strleft,
     });
     ret.add(each);
   }
+  print(ret);
   return ret;
 }
