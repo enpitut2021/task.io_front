@@ -75,7 +75,7 @@ class _TodayState extends State<Today> {
         future: _getFutureValue(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
@@ -129,7 +129,7 @@ class _TodayState extends State<Today> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                task["goal"],
+                                task["goal"] + "hours",
                                 // "hellooo",
                                 style: TextStyle(
                                   fontSize: 40,
@@ -177,7 +177,7 @@ class _TodayState extends State<Today> {
 }
 
 Future<String> _getFutureValue() async {
-  return Future.delayed(new Duration(seconds: 5), () {
+  return Future.delayed(new Duration(seconds: 2), () {
     return "completed!!";
   });
   // 擬似的に通信中を表現するために１秒遅らせる

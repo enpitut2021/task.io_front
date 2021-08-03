@@ -54,7 +54,7 @@ List<Map> Today_calc(response) {
     var allDays = deadline.difference(createdAt).inDays;
     print(allDays);
     var leftDays = deadline.difference(now).inDays;
-    var goal = int.parse(task["tasktime"].substring(3, 5)) / (allDays + 1);
+    var goal = int.parse(task["tasktime"].substring(3, 5)) / (allDays + 1) + 1;
     var left = (leftDays + 1) / (allDays + 1) * 100 % 1;
     // var goal = "20";
     // var left = "30";
@@ -64,8 +64,8 @@ List<Map> Today_calc(response) {
     print(goal.runtimeType);
     print("left.rentimeType");
     print(left.runtimeType);
-    String strgoal = goal.round().toString();
-    String strleft = left.round().toString();
+    String strgoal = goal.ceil().toString();
+    String strleft = left.ceil().toString();
     // print(allDays.runtimeType);
     // print(leftDays.runtimeType);
     print(goal.runtimeType);
