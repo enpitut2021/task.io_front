@@ -59,17 +59,17 @@ class _TodayState extends State<Today> {
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         title: Text('Today\'s Task'),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () async {
-                response = await fetchStores();
-                print('response_pressed');
-                print(response);
-                tasks = Today_calc(response);
-                // print(response[0]["title"]);
-              },
-              icon: Icon(Icons.autorenew))
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //       onPressed: () async {
+        //         response = await fetchStores();
+        //         print('response_pressed');
+        //         print(response);
+        //         tasks = Today_calc(response);
+        //         // print(response[0]["title"]);
+        //       },
+        //       icon: Icon(Icons.autorenew))
+        // ],
       ),
       body: FutureBuilder(
         future: _getFutureValue(),
@@ -89,78 +89,126 @@ class _TodayState extends State<Today> {
                   height: 10,
                 ),
                 for (var task in tasks)
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(width: 30),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(height: 5),
-                              Text(
-                                // "Hello WOrld!",
-                                task["title"],
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color(0xff333333),
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                "~" + date_format(task["limit"]),
-                                // "hello",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal,
-                                  color: const Color(0xff333333),
-                                ),
-                              ),
-                            ],
-                          ),
+                  // for (var task = 0; task < 3; task++)
+                  OutlinedButton(
+                      child: Column(
+                        children: [
                           SizedBox(
-                            width: 80,
+                            height: 10,
                           ),
-                          Column(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                task["goal"] + "hours",
-                                // "hellooo",
-                                style: TextStyle(
-                                  fontSize: 40,
-                                ),
-                              ),
-                              Row(
+                              SizedBox(width: 30),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  //SizedBox(height: 5),
                                   Container(
-                                      color: Colors.lightGreenAccent[400],
-                                      width: 1.30 *
-                                          (100 - int.parse(task["left"])),
-                                      height: 25),
+                                    width: 100,
+                                    child: Text(
+                                      //"Hello WOrlaaaaaaaaaaaaaaaaaaaaad!",
+                                      task["title"],
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xff333333),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
                                   Container(
-                                      color: Colors.blueGrey[200],
-                                      width: 1.30 * int.parse(task["left"]),
-                                      height: 25),
+                                    width: 110,
+                                    child: Text(
+                                      "~" + date_format(task["limit"]),
+                                      //"hello",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.normal,
+                                        color: const Color(0xff333333),
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 80,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    task["goal"] + "hours",
+                                    //"hellooo",
+                                    style: TextStyle(
+                                      fontSize: 40,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                          color: Colors.lightGreenAccent[400],
+                                          width: 1.20 *
+                                              (100 - int.parse(task["left"])),
+                                          // width: 1.30 * (100 - 80),
+                                          height: 25),
+                                      Container(
+                                          color: Colors.blueGrey[200],
+                                          width: 1.20 * int.parse(task["left"]),
+                                          // width: 1.30 * 20,
+                                          height: 25),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
                           ),
+                          // Divider(
+                          //   height: 40,
+                          //   thickness: 3,
+                          //   color: Colors.black,
+                          //   indent: 0,
+                          //   endIndent: 0,
+                          // ),
+                          SizedBox(
+                            height: 10,
+                          ),
                         ],
                       ),
-                      Divider(
-                        height: 40,
-                        thickness: 3,
-                        color: Colors.black,
-                        indent: 0,
-                        endIndent: 0,
-                      ),
-                    ],
-                  ),
+                      // style: OutlineButton.styleFrom(
+                      //   primary:Colors.black,
+                      //   shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.circula(10),
+                      //   ),
+                      //   side:const BorderSide(),
+                      // ),
+                      onPressed: () {
+                        var result = showDialog<int>(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('詳細'),
+                                content: Text(task['detail']),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(0),
+                                  ),
+                                  FlatButton(
+                                    child: Text('OK'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(1),
+                                  ),
+                                ],
+                              );
+                            });
+                      }),
               ],
             );
           } else {
