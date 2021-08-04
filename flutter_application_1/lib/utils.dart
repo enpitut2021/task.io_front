@@ -55,7 +55,7 @@ List<Map> Today_calc(response) {
     print(allDays);
     var leftDays = deadline.difference(now).inDays;
     var goal = int.parse(task["tasktime"].substring(3, 5)) / (allDays + 1) + 1;
-    var left = (leftDays + 1) / (allDays + 1) * 100 % 1;
+    var left = (leftDays - 1) / allDays * 100;
     // var goal = "20";
     // var left = "30";
     print(goal);
@@ -75,6 +75,7 @@ List<Map> Today_calc(response) {
       "title": task["title"],
       "limit": task["deadline"],
       "left": strleft,
+      "detail": task["detail"],
     });
     ret.add(each);
   }

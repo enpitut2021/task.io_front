@@ -197,13 +197,42 @@ Future<ApiResults> fetchApiResults(title, detail, deadline, tasktime) async {
   var url = "https://task-io-blitzkrieg.herokuapp.com/api/tasks/";
   // var url = "https://httpbin.org/post";
   print("here4");
+  List<Map> progress = [];
+  DateTime now = DateTime.now();
+  int allDays = deadline.difference(now).inDays + 1;
+  double progressPerDay = 100 / allDays;
+  for (int i = 0; i < allDays; i++) {
+    Map<String, dynamic> daylyProgress = {};
+    DateTime date = DateTime.now().add(Duration(days: i));
+    double eachProgress = 100 - progressPerDay * (i + 1);
+    int intEachProgress = eachProgress.ceil();
+    daylyProgress.addAll({
+      'progress': intEachProgress,
+      'date': date.toIso8601String().substring(0, 19) + '+0000',
+    });
+    progress.add(daylyProgress);
+  }
+  print(progress);
   var request = new SampleRequest(
-      title: title, detail: detail, deadline: deadline, tasktime: tasktime);
+      title: title,
+      detail: detail,
+      deadline: deadline,
+      tasktime: tasktime,
+      progress: progress);
   print("im here!");
   print(request.toJson());
   print(request.deadline);
+  print(json
+      .encode(request.toJson())
+      .replaceAll('\\', '')
+      .replaceAll("\"[", "[")
+      .replaceAll("]\"", "]"));
   final response = await http.post(url,
-      body: json.encode(request.toJson()),
+      body: json
+          .encode(request.toJson())
+          .replaceAll('\\', '')
+          .replaceAll("\"[", "[")
+          .replaceAll("]\"", "]"),
       headers: {"Content-Type": "application/json"});
   if (response.statusCode == 200) {
     print("Hello World!");
@@ -221,17 +250,22 @@ class SampleRequest {
   String detail;
   String tasktime;
   DateTime deadline;
+  List<Map> progress;
   SampleRequest({
     this.title,
     this.detail,
     this.tasktime,
     this.deadline,
+    this.progress,
   });
   Map<String, dynamic> toJson() => {
         'title': title,
         'detail': detail,
-        'tasktime': "00:0" + tasktime.toString() + ":00",
+        'tasktime': tasktime.toString().length == 2
+            ? tasktime.toString() + ":00:00"
+            : "0" + tasktime.toString() + ":00:00",
         'deadline': deadline.toIso8601String().substring(0, 19) + "+0000",
+        // 'progress': json.encode(progress),
       };
 }
 
